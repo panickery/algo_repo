@@ -1,0 +1,34 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+
+        Scanner sc=new Scanner(System.in);
+        String A=sc.next();
+        String B=sc.next();
+        String lexicFlag = "";
+        /* Enter your code here. Print output to STDOUT. */
+        System.out.println(A.length() + B.length());
+        System.out.println(lexicFlag = checkLexic(checkFirst(A), checkFirst(B)));
+        System.out.println(checkFirst(A) + " " + checkFirst(B));
+
+    }
+
+    public static String checkLexic(String a, String b)
+    {
+        if(a.charAt(0) > b.charAt(0))
+            return "Yes";
+        else
+            return "No";
+    }
+
+    public static String checkFirst(String a)
+    {
+        char[] tempCharArr = {};
+        tempCharArr = a.toCharArray();
+        tempCharArr[0] = a.toUpperCase().charAt(0);
+        return new String(tempCharArr);
+    }
+}
