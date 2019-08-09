@@ -1,0 +1,74 @@
+//my Solution
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Scanner;
+
+public class Solution {
+
+    public static String getSmallestAndLargest(String s, int k) {
+        String smallest = "";
+        String largest = "";
+        ArrayList<String> strList = new List<String>();
+
+        for(int i  = 0; i < s.length() - k; i++)
+            strList.add(s.substring(i, i + k));
+        Collections.sort(strList);
+
+        smallest=strList.get(0);
+        largest=strList.get(strList.size()-1);
+
+        // Complete the function
+        // 'smallest' must be the lexicographically smallest substring of length 'k'
+        // 'largest' must be the lexicographically largest substring of length 'k'
+
+        return smallest + "\n" + largest;
+    }
+
+
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        String s = scan.next();
+        int k = scan.nextInt();
+        scan.close();
+
+        System.out.println(getSmallestAndLargest(s, k));
+    }
+}
+
+
+// hackerrank condition
+// ㅠㅠ i cheated.. i couldn't solve this problem
+
+import java.util.Scanner;
+
+public class Solution {
+
+    public static String getSmallestAndLargest(String s, int k) {
+        String smallest = "";
+        String largest = "";
+
+        java.util.ArrayList<String> sets=new java.util.ArrayList<String>();
+        for(int i=0;i<=s.length()-k;i++){
+            sets.add(s.substring(i,i+k));
+        }
+
+        java.util.Collections.sort(sets);
+        System.out.println(sets.get(0));
+        System.out.print(sets.get(s.length()-k));
+
+        return smallest + "\n" + largest;
+    }
+
+
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        String s = scan.next();
+        int k = scan.nextInt();
+        scan.close();
+
+        System.out.println(getSmallestAndLargest(s, k));
+    }
+}
+
+
