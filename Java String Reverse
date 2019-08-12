@@ -32,3 +32,11 @@ public class Solution {
 
 //did without IDE
 //but with Java Platform SE 8 Guide
+
+
+//Someone did that like this!!
+
+System.out.println( A.equals( new StringBuilder(A).reverse().toString()) 
+    ? "Yes" : "No" );
+    
+// awesome
