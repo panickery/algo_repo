@@ -1,0 +1,102 @@
+import java.util.Scanner;
+
+public class Solution {
+
+   static boolean isAnagram(String a, String b) {
+        // Complete the function
+        char[] aChar = a.toLowerCase().toCharArray();
+        char[] bChar = b.toLowerCase().toCharArray();
+
+        java.util.Arrays.sort(aChar);
+        java.util.Arrays.sort(bChar);
+
+//        System.out.println(String.valueOf(aChar));
+//        System.out.println(String.valueOf(bChar));
+        return String.valueOf(aChar).equalsIgnoreCase(String.valueOf(bChar));
+    }
+
+  public static void main(String[] args) {
+    
+        Scanner scan = new Scanner(System.in);
+        String a = scan.next();
+        String b = scan.next();
+        scan.close();
+        boolean ret = isAnagram(a, b);
+        System.out.println( (ret) ? "Anagrams" : "Not Anagrams" );
+    }
+}
+
+//sort, equals have quite big O so someone wrote code explanation
+
+
+Arrays.sort(a);
+
+Arrays.sort(b);
+
+return Arrays.equals(a,b);
+
+may look like a fine solution but it’s not. A good code is a fast code, not a short code. If you look in the API, Arrays.sort(a) works in n log(n), another Arrays.sort(a), and we have n log(n) + n log(n) = 2*n*log(n);
+
+And we still have to do Arrays.equals(a,b), which will be n/2. So altogether 2*n*log(n) + n/2 = n* log(n), which is a poor result if we can do it in O(n).
+
+So the problem is actually like this: we have two sets and we want to compare if they are equal, i.e. contain the same elements. An extra problem is that the sets can contain duplicates (So we can’t use Hashsets to solve it.)
+
+When we think about the problem we notice two more things: 1) When you have two strings: “ace” and Llanfair¬pwllgwyngyll¬gogery¬chwyrn¬drobwll¬llan¬tysilio¬gogo¬goch (the longest Welsh word), will you immediately tell that they can’t be anagrams? YES, because you see right away they are not the same size. With character arrays (this is what the Java Strings are internally) we can check in constant time O(1) the size. Java will then also immedaitely tell if these two strings - "Llanfair¬pwllgwyngyll¬gogery¬chwyrn¬drobwll¬llan¬tysilio¬gogo¬goch" and "Llanfair¬pwllgwyngyll¬gogery¬chwrn¬drobwll¬llan¬tysilio¬gogo¬goch" - are anagrams. (They aren’t. I removed a letter from the second string. : - ) ) Imagine how much unnecessary work would have to be done on all those letters one by one to check if those two strings are equal. For this reason I would find it worthwhile to include the size test before we do the actual work.
+
+2) Now, what we don’t really want to do is keep checking all the subsequent letters of string A if we discover that the first(or second, or third, etc.) letter of this string is not actually present in the second string B or its frequency is different. So the idea is to stop checking as soon as we discover that a letter is not present in the second string or the number it appears in the first string is different from the number it appears in the second.
+
+3) Solution:
+
+a) Put all the letters of string B in a HashMap with a letter as key and its frequency as value (just increment the frequency by 1 every time you put the same letter again in the map.) Time complexity: (O(n/2) One string is like a half of all the letters we provide as arguments to this method (n) – that’s why I divide n by 2.
+
+b) Next, iterate over the letters of string A (this will be another O(n/2) ) and look each letter up in the HashMap. If it’s not there or its frequency is 0, bingo! “Not anagram!”, if it’s there, decrement its frequency by one (All these operations : look up for a HashTable, comparison, decrement - are O(1).
+
+Total time compexity then is O(n/2) + O(n/2) = O(n) where n is the number of letters in both strings.
+
+static boolean isAnagram(String a, String b) {
+
+// test for invalid input   
+if( a == null || b == null || a.equals("") || b.equals("") )
+    throw new IllegalArgumentException();
+
+// initial quick test for non-anagrams
+if ( a.length() != b.length() )
+    return false;
+
+a = a.toLowerCase();
+b = b.toLowerCase();
+
+// populate a map with letters and frequencies of String b
+Map<Character, Integer> map = new HashMap<>();
+
+for (int k = 0; k < b.length(); k++){
+     char letter = b.charAt(k);    
+
+    if( ! map.containsKey(letter)){
+        map.put( letter, 1 );
+    } else {
+        Integer frequency = map.get( letter );
+        map.put( letter, ++frequency );
+    }
+}
+
+// test each letter in String a against data in the map
+// return if letter is absent in the map or its  frequency is 0
+// otherwise decrease the frequency by 1
+
+for (int k = 0; k < a.length(); k++){
+    char letter = a.charAt(k);
+
+    if( ! map.containsKey( letter ) )
+        return false;
+
+    Integer frequency = map.get( letter );
+
+     if( frequency == 0 )
+        return false;
+    else    
+        map.put( letter, --frequency);
+}
+// if the code got that far it is an anagram
+return true;
+}
