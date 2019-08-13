@@ -1,0 +1,21 @@
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        String s = scan.nextLine();
+        // Write your code here.
+        String[] a = s.split("[ !,?._'@]+");
+        System.out.println(a.length);
+
+        for(int i = 0; i < a.length; i++)
+            System.out.println(a[i]);
+        scan.close();
+    }
+}
+
+// i can't solve
+// 4test case failed
+// i don't know why
