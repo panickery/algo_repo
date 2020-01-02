@@ -7,15 +7,22 @@ public class Solution {
         Scanner scan = new Scanner(System.in);
         String s = scan.nextLine();
         // Write your code here.
-        String[] a = s.split("[ !,?._'@]+");
-        System.out.println(a.length);
+        String[] a = s.trim().split("[ !,?._'@]+");
+        if (a.length == 1 && a[0].equals("")) {
+            System.out.println("0");
+            scan.close();
+        } else {
+            System.out.println(a.length);
 
-        for(int i = 0; i < a.length; i++)
-            System.out.println(a[i]);
-        scan.close();
+            for (int i = 0; i < a.length; i++)
+                System.out.println(a[i]);
+            scan.close();
+        }
     }
 }
 
-// i can't solve
-// 4test case failed
-// i don't know why
+// now I know
+// why I failed
+// that's because of weird java blank processing
+// I refered to the discussion!
+// All pass!!
